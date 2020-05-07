@@ -2,7 +2,8 @@
 
 A synchronous wrapper for [asyncpg](https://pypi.org/project/asyncpg/).
 
-It has the exact same API as asyncpg except there is no connection pool functionality.
+It has the exact same API as asyncpg except wihtout functionality that only makes sense in an asynchronous context.
+Currently this means connection pools and any kind of listeners.
 See the asyncpg docs for usage.
 
 ## License
