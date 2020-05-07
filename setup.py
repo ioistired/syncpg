@@ -2,11 +2,18 @@
 
 from setuptools import setup
 
+version = ''
+with open('syncpg.py') as f:
+	version = re.search("""r^__version__\s*=\s*['"]([^'"]*)['"]""", f.read(), re.MULTILINE).group(1)
+
+if not version:
+	raise RuntimeError('version is not set')
+
 setup(
 	name='syncpg',
 	author='iomintz',
 	author_email='io@mintz.cc',
-	version='1.0.0',
+	version=version,
 	description='synchronous wrapper for asyncpg',
 	license='BlueOak-1.0.0',
 	url='https://github.com/iomintz/syncpg',
