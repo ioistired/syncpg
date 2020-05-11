@@ -4,6 +4,7 @@ __version__ = '1.0.0'
 
 import asyncpg
 import asyncio
+import contextlib
 
 def connect(*args, **kwargs):
 	loop = asyncio.get_event_loop()
@@ -83,10 +84,13 @@ class Transaction(_Wrapper):
 		return self.loop.run_until_complete(self._tx.__aexit__(*excinfo))
 
 class Cursor(_Wrapper):
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self._cur_factory = self._conn.cursor(*self._args, **self._kwargs)
+		self._cur = self.loop.run_until_complete(self._cur_factory)
+
 	def __iter__(self):
-		cur_factory = self._conn.cursor(*self._args, **self._kwargs)
-		self._cur = self.loop.run_until_complete(cur_factory)
-		self._it = cur_factory.__aiter__()
+		self._it = self._cur_factory.__aiter__()
 		return self
 
 	def __next__(self):
@@ -105,4 +109,5 @@ class Cursor(_Wrapper):
 		return self.loop.run_until_complete(self._cur.forward(*args, **kwargs))
 
 	def __del__(self):
-		self._it.__del__()
+		with contextlib.suppress(AttributeError):
+			self._it.__del__()
