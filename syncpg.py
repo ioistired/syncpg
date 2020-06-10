@@ -38,7 +38,7 @@ class Connection(_Wrapper):
 
 		This is a syncpg-specific extension.
 		"""
-		return [x for x, in self.fetch(query, *args, **kwargs)]
+		return [x for x, in self.fetch(*args, **kwargs)]
 
 	def copy_from_table(self, *args, **kwargs):
 		return self.loop.run_until_complete(self._conn.copy_from_table(*args, **kwargs))
