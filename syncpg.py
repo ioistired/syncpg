@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BlueOak-1.0.0
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 import asyncpg
 import asyncio
