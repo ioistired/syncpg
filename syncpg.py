@@ -33,6 +33,13 @@ class Connection(_Wrapper):
 	def fetchval(self, *args, **kwargs):
 		return self.loop.run_until_complete(self._conn.fetchval(*args, **kwargs))
 
+	def fetchvals(self, *args, **kwargs):
+		"""Fetch the first value from each row of the query.
+
+		This is a syncpg-specific extension.
+		"""
+		return [x for x, in self.fetch(query, *args, **kwargs)]
+
 	def copy_from_table(self, *args, **kwargs):
 		return self.loop.run_until_complete(self._conn.copy_from_table(*args, **kwargs))
 
