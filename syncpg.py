@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: BlueOak-1.0.0
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 import asyncpg
 import asyncio
 import contextlib
 
 def connect(*args, **kwargs):
-	loop = asyncio.get_event_loop()
+	loop = kwargs.pop('loop') or asyncio.new_event_loop()
 	return Connection(loop.run_until_complete(asyncpg.connect(*args, **kwargs)), loop=loop)
 
 class _Wrapper:
