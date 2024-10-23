@@ -17,7 +17,7 @@ if not version:
 
 setup(
 	name='syncpg',
-	author='iomintz',
+	author='io',
 	author_email='io@mintz.cc',
 	version=version,
 	description='synchronous wrapper for asyncpg',
