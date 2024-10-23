@@ -7,7 +7,7 @@ import asyncio
 import contextlib
 
 def connect(*args, **kwargs):
-	loop = kwargs.pop('loop') or asyncio.new_event_loop()
+	loop = kwargs.get('loop') or asyncio.new_event_loop()
 	return Connection(loop.run_until_complete(asyncpg.connect(*args, **kwargs)), loop=loop)
 
 class _Wrapper:
